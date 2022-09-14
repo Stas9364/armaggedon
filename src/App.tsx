@@ -15,7 +15,7 @@ function App() {
 
     useEffect(() => {
         if (fetching) {
-            asteroidsDataAPI.getData(19, currentPage)
+            asteroidsDataAPI.getData(20, currentPage)
                 .then(response => {
                     dispatch(getAsteroidsData(response.data.near_earth_objects));
                     setCurrentPage(currentPage + 1);

@@ -1,19 +1,23 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import style from './AsteroidsPage.module.css';
 import '../GeneralStyle.css';
 import {Asteroid} from './Asteroid/Asteroid';
 import {isDangerousAsteroids, isFetching} from '../../redux/asteroidsReducer';
 import {useAppDispatch, useAppSelector} from '../../utils/hooks';
-import {approachDate} from '../../utils/approachDate';
+import {approachDataObject} from '../../utils/approachDataObject';
 import {asteroidsListSelector, filteredAsteroidsListSelector, isDangerousSelector} from './selectors';
+import {Button} from '../../components';
+import {addAsteroid} from '../../redux/cartAsteroidReducer';
+import {Line} from '../../components';
 
 export function AsteroidsPage() {
     const dispatch = useAppDispatch();
 
+    const [lengthUnit, setLengthUnit] = useState<'kilometers' | 'lunar'>('kilometers');
+
     const isDangerous = useAppSelector(isDangerousSelector);
     const asteroidsList = useAppSelector(isDangerous ? filteredAsteroidsListSelector : asteroidsListSelector);
     console.log(asteroidsList)
-
     useEffect(() => {
         document.addEventListener('scroll', scrollHandler);
 
@@ -23,7 +27,7 @@ export function AsteroidsPage() {
     }, []);
 
     const scrollHandler = (e: any) => {
-        if (e.target.documentElement.scrollHeight - ((e.target.documentElement.scrollTop ) + window.innerHeight) < 100) {
+        if (e.target.documentElement.scrollHeight - ((e.target.documentElement.scrollTop) + window.innerHeight) < 100) {
             dispatch(isFetching(true));
         }
     };
@@ -33,16 +37,32 @@ export function AsteroidsPage() {
     };
 
     const addAsteroidToCart = (id: string) => {
-        console.log(id)
-    }
+        dispatch(addAsteroid(asteroidsList.filter((a: any) => a.id === id)));
+    };
+
+    const kilometerUnitHandler = () => setLengthUnit('kilometers');
+
+    const lunarUnitHandler = () => setLengthUnit('lunar');
 
     return (
         <div className="container">
             <div className={style.page}>
                 <span className={style.title}>Ближайшие подлеты</span>
-                <div className={style.line}/>
+                <Line/>
                 <div className={style.filter}>
-                    Отображать расстояние: в киллометрах | лунных орбитах
+                    <span>
+                         Отображать расстояние:
+                        <span
+                            onClick={kilometerUnitHandler}
+                            className={style.lengthUnit}
+                            style={lengthUnit === 'kilometers' ? {fontWeight: 'bold'} : {}}
+                        > в киллометрах </span> |
+                        <span
+                            onClick={lunarUnitHandler}
+                            className={style.lengthUnit}
+                            style={lengthUnit === 'lunar' ? {fontWeight: 'bold'} : {}}
+                        > лунных орбитах</span>
+                    </span>
                     <div>
                         <input onChange={isDangerousHandler} checked={isDangerous} type="checkbox"/>
                         <span>Показать только опасные</span>
@@ -57,9 +77,19 @@ export function AsteroidsPage() {
                             hazardous={a.is_potentially_hazardous_asteroid}
                             name_limited={a.name}
                             diameter={a.estimated_diameter.kilometers.estimated_diameter_max}
-                            approachDate={approachDate(a.close_approach_data)}
-                            addAsteroidToCart={addAsteroidToCart}
-                        />
+                            approachDate={approachDataObject(a.close_approach_data).close_approach_date_full}
+                            distance={
+                                lengthUnit === 'kilometers'
+                                    ? approachDataObject(a.close_approach_data).miss_distance.kilometers
+                                    : approachDataObject(a.close_approach_data).miss_distance.lunar
+                            }
+                        >
+                            <Button
+                                name={'DESTROY'}
+                                onClick={() => addAsteroidToCart(a.id)}
+                                style={style.button}
+                            />
+                        </Asteroid>
                     })}
                 </div>
             </div>

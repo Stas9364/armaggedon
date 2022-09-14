@@ -1,6 +1,8 @@
-import React from 'react';
+import React, {ReactNode} from 'react';
 import style from './Asteroid.module.css';
-import {nonDangerous, Dangerous} from '../../../assets';
+import {Dangerous, nonDangerous} from '../../../assets';
+import {diameterPic} from '../../../assets';
+import {distancePic} from "../../../assets";
 
 type AsteroidPropsTypes = {
     id: string
@@ -8,8 +10,9 @@ type AsteroidPropsTypes = {
     name_limited: string
     link: string
     diameter: number
-    approachDate: string
-    addAsteroidToCart: (id: string) => void
+    approachDate: any
+    children?: ReactNode
+    distance: string
 }
 
 export const Asteroid: React.FC<AsteroidPropsTypes> = ({
@@ -19,26 +22,34 @@ export const Asteroid: React.FC<AsteroidPropsTypes> = ({
                                                            link,
                                                            diameter,
                                                            approachDate,
-                                                           addAsteroidToCart
-}) => {
-
-    const buttonHandler = () => addAsteroidToCart(id);
+                                                           children,
+                                                           distance,
+                                                       }) => {
 
     return (
         <div className={style.container}>
             <div className={style.asteroidContainer}>
                 <div className={style.date}>
-                    {approachDate}
+                    {name_limited}
                 </div>
                 <div className={style.descriptionContainer}>
                     <img src={hazardous ? Dangerous : nonDangerous} alt="asteroid"/>
                     <div className={style.description}>
-                        <div>{name_limited}</div>
-                        <div>{diameter.toFixed(2)} км</div>
+                        <div>{approachDate}</div>
+                        <div>
+                            <img className={style.unitsImg}
+                                src={diameterPic} alt="diameter img"
+                            /> {diameter.toFixed(2)} км
+                        </div>
                         <div>{hazardous ? 'Опасно' : 'Безопасно'}</div>
+                        <div>
+                            <img className={style.unitsImg}
+                                 src={distancePic}  alt="distance img"
+                            /> {Math.round(Number(distance))}
+                        </div>
                     </div>
                 </div>
-                <div onClick={buttonHandler} className={style.button}>DESTROY</div>
+                {children}
             </div>
         </div>
     );
