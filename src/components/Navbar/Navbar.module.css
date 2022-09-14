@@ -13,3 +13,7 @@
     display: flex;
     justify-content: space-between;
 }
+
+.text {
+    text-shadow: 2px 1px 3px white, 0 0 1em white;
+}

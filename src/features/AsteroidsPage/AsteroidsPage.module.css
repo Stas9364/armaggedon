@@ -21,9 +21,9 @@
 }
 
 .asteroidsContainer {
-    border: 2px solid;
+    /*border: 2px solid;*/
     margin-top: 50px;
     display: flex;
     flex-wrap: wrap;
-    justify-content: center;
+    justify-content: space-evenly;
 }

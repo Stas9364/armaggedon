@@ -18,14 +18,14 @@ export function Navbar() {
         <div className={style.navbarContainer} style={{backgroundImage: `url(${dailyPhoto})`}}>
 
             <div className={style.titleContainer}>
-                <div>ARMAGEDDON</div>
+                <div className={style.text}>ARMAGEDDON</div>
                 <div>
                     <span><NavLink to={PATH.main}>Астероиды</NavLink></span>
                     <span><NavLink to={PATH.order}>Заказ</NavLink></span>
                 </div>
             </div>
 
-            <div>Сервис заказа уничтожения астероидов, опасно подлетающих к Земле.</div>
+            <div className={style.text}>Сервис заказа уничтожения астероидов, опасно подлетающих к Земле.</div>
 
             {/* <NavLink to={PATH.about}>About</NavLink> */}
         </div>

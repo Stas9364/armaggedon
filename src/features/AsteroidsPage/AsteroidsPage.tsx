@@ -2,18 +2,39 @@ import React, {useEffect} from 'react';
 import style from './AsteroidsPage.module.css';
 import '../GeneralStyle.css';
 import {Asteroid} from './Asteroid/Asteroid';
-import {getAsteroidsDataTC} from "../../redux/asteroidsReducer";
-import {useAppDispatch, useAppSelector} from "../../utils/hooks";
+import {isDangerousAsteroids, isFetching} from '../../redux/asteroidsReducer';
+import {useAppDispatch, useAppSelector} from '../../utils/hooks';
+import {approachDate} from '../../utils/approachDate';
+import {asteroidsListSelector, filteredAsteroidsListSelector, isDangerousSelector} from './selectors';
 
 export function AsteroidsPage() {
     const dispatch = useAppDispatch();
 
+    const isDangerous = useAppSelector(isDangerousSelector);
+    const asteroidsList = useAppSelector(isDangerous ? filteredAsteroidsListSelector : asteroidsListSelector);
+    console.log(asteroidsList)
+
     useEffect(() => {
-        dispatch(getAsteroidsDataTC());
+        document.addEventListener('scroll', scrollHandler);
+
+        return () => {
+            document.removeEventListener('scroll', scrollHandler);
+        }
     }, []);
 
-    const asteroidsList = useAppSelector(state => state.asteroids);
-    console.log(asteroidsList)
+    const scrollHandler = (e: any) => {
+        if (e.target.documentElement.scrollHeight - ((e.target.documentElement.scrollTop ) + window.innerHeight) < 100) {
+            dispatch(isFetching(true));
+        }
+    };
+
+    const isDangerousHandler = () => {
+        dispatch(isDangerousAsteroids(!isDangerous));
+    };
+
+    const addAsteroidToCart = (id: string) => {
+        console.log(id)
+    }
 
     return (
         <div className="container">
@@ -23,7 +44,7 @@ export function AsteroidsPage() {
                 <div className={style.filter}>
                     Отображать расстояние: в киллометрах | лунных орбитах
                     <div>
-                        <input type="checkbox"/>
+                        <input onChange={isDangerousHandler} checked={isDangerous} type="checkbox"/>
                         <span>Показать только опасные</span>
                     </div>
                 </div>
@@ -34,13 +55,15 @@ export function AsteroidsPage() {
                             id={a.id}
                             link={a.links}
                             hazardous={a.is_potentially_hazardous_asteroid}
-                            name_limited={a.name_limited}
+                            name_limited={a.name}
                             diameter={a.estimated_diameter.kilometers.estimated_diameter_max}
+                            approachDate={approachDate(a.close_approach_data)}
+                            addAsteroidToCart={addAsteroidToCart}
                         />
                     })}
-
                 </div>
             </div>
         </div>
     );
 }
+
