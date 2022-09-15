@@ -20,14 +20,13 @@ export function Navbar() {
             <div className={style.titleContainer}>
                 <div className={style.text}>ARMAGEDDON</div>
                 <div>
-                    <span><NavLink to={PATH.main}>Астероиды</NavLink></span>
-                    <span><NavLink to={PATH.order}>Заказ</NavLink></span>
+                    <span><NavLink to={PATH.main} className={style.link}> Астероиды</NavLink></span>
+                    <span><NavLink to={PATH.order} className={style.link}> Заказ</NavLink></span>
                 </div>
             </div>
 
             <div className={style.text}>Сервис заказа уничтожения астероидов, опасно подлетающих к Земле.</div>
 
-            {/* <NavLink to={PATH.about}>About</NavLink> */}
         </div>
     );
 }

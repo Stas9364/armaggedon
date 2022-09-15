@@ -5,6 +5,7 @@ import {asteroidsListSelector} from './AsteroidsPage/selectors';
 import {filteredAsteroidsListSelector} from './AsteroidsPage/selectors';
 import {isDangerousSelector} from './AsteroidsPage/selectors';
 import {isFetchingSelector} from './AsteroidsPage/selectors';
+import {cartAsteroidsSelector} from './AsteroidsCart/selectors';
 
 export {
     About,
@@ -13,5 +14,6 @@ export {
     asteroidsListSelector,
     filteredAsteroidsListSelector,
     isDangerousSelector,
-    isFetchingSelector
+    isFetchingSelector,
+    cartAsteroidsSelector
 };

@@ -2,15 +2,15 @@ import React, {useEffect, useState} from 'react';
 import style from './AsteroidsPage.module.css';
 import '../GeneralStyle.css';
 import {Asteroid} from './Asteroid/Asteroid';
-import {isDangerousAsteroids, isFetching} from '../../redux/asteroidsReducer';
+import {destroyAsteroid, isDangerousAsteroids, isFetching} from '../../redux/asteroidsReducer';
 import {useAppDispatch, useAppSelector} from '../../utils/hooks';
 import {approachDataObject} from '../../utils/approachDataObject';
 import {asteroidsListSelector, filteredAsteroidsListSelector, isDangerousSelector} from './selectors';
 import {Button} from '../../components';
 import {addAsteroid} from '../../redux/cartAsteroidReducer';
 import {Line} from '../../components';
-import {useNavigate} from "react-router-dom";
-import {PATH} from "../../components/routes/AppRouter";
+import {useNavigate} from 'react-router-dom';
+import {PATH} from '../../components';
 
 export function AsteroidsPage() {
     const dispatch = useAppDispatch();
@@ -20,7 +20,7 @@ export function AsteroidsPage() {
 
     const isDangerous = useAppSelector(isDangerousSelector);
     const asteroidsList = useAppSelector(isDangerous ? filteredAsteroidsListSelector : asteroidsListSelector);
-    console.log(asteroidsList)
+
     useEffect(() => {
         document.addEventListener('scroll', scrollHandler);
 
@@ -41,6 +41,7 @@ export function AsteroidsPage() {
 
     const addAsteroidToCart = (id: string) => {
         dispatch(addAsteroid(asteroidsList.filter((a: any) => a.id === id)));
+        dispatch(destroyAsteroid(id));
     };
 
     const kilometerUnitHandler = () => setLengthUnit('kilometers');
@@ -51,7 +52,7 @@ export function AsteroidsPage() {
             `${PATH.about}/${id}`,
             {state: asteroid}
             );
-    }
+    };
 
     return (
         <div className="container">
@@ -72,17 +73,19 @@ export function AsteroidsPage() {
                             style={lengthUnit === 'lunar' ? {fontWeight: 'bold'} : {}}
                         > лунных орбитах</span>
                     </span>
-                    <div>
-                        <input onChange={isDangerousHandler} checked={isDangerous} type="checkbox"/>
-                        <span>Показать только опасные</span>
+                    <div >
+                        <span onClick={isDangerousHandler}>
+                            <input onChange={isDangerousHandler}  checked={isDangerous} type="checkbox"/>
+                            Показать только опасные
+                        </span>
                     </div>
                 </div>
+
                 <div className={style.asteroidsContainer}>
                     {asteroidsList.map((a: any) => {
                         return <Asteroid
                             key={a.id}
                             id={a.id}
-                            link={a.links}
                             hazardous={a.is_potentially_hazardous_asteroid}
                             name_limited={a.name}
                             diameter={a.estimated_diameter.kilometers.estimated_diameter_max}

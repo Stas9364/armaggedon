@@ -6,13 +6,18 @@ import {Button, Line} from '../../components';
 import {Asteroid} from '../AsteroidsPage/Asteroid/Asteroid';
 import {approachDataObject} from '../../utils/approachDataObject';
 import {deleteAsteroid} from '../../redux/cartAsteroidReducer';
+import {cancelDestruction} from '../../redux/asteroidsReducer';
+import {cartAsteroidsSelector} from './selectors';
 
 export function AsteroidsCart() {
     const dispatch = useAppDispatch();
 
-    const asteroids = useAppSelector(state => state.cart);
+    const asteroids = useAppSelector(cartAsteroidsSelector);
 
-    const cancelOrderHandler = (id: string) => dispatch(deleteAsteroid(id));
+    const cancelOrderHandler = (id: string) => {
+        dispatch(deleteAsteroid(id));
+        dispatch(cancelDestruction(asteroids.filter((a: any) => a.id === id)));
+    };
 
     return (
         <div className="container">
@@ -25,9 +30,8 @@ export function AsteroidsCart() {
                                 id={a.id}
                                 hazardous={a.is_potentially_hazardous_asteroid}
                                 name_limited={a.name_limited}
-                                link={a.links}
                                 diameter={a.estimated_diameter.kilometers.estimated_diameter_max}
-                                approachDate={approachDataObject(a.close_approach_data).close_approach_date_full}
+                                approachDate={approachDataObject(a.close_approach_data).close_approach_date}
                                 distance={approachDataObject(a.close_approach_data).miss_distance.kilometers}
                             >
                                 <Button name={'отменить'} onClick={() => cancelOrderHandler(a.id)}
@@ -47,7 +51,6 @@ export function AsteroidsCart() {
                     />
                 </div>
             </div>
-
         </div>
     );
 }

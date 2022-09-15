@@ -42,6 +42,7 @@
 
 .orderBlock div {
     align-self: center;
+    padding-bottom: 10px;
 }
 
 .totalCount {

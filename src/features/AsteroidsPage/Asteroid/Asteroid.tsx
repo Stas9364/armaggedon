@@ -8,7 +8,6 @@ type AsteroidPropsTypes = {
     id: string
     hazardous: boolean
     name_limited: string
-    link: string
     diameter: number
     approachDate: any
     children?: ReactNode
@@ -21,7 +20,6 @@ export const Asteroid: React.FC<AsteroidPropsTypes> = ({
                                                            id,
                                                            hazardous,
                                                            name_limited,
-                                                           link,
                                                            diameter,
                                                            approachDate,
                                                            children,

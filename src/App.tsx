@@ -1,10 +1,10 @@
 import React, {useEffect, useState} from 'react';
 import './App.css';
-import { AppRouter, Navbar } from './components';
-import {asteroidsDataAPI} from "./api/api";
-import {getAsteroidsData, isFetching} from "./redux/asteroidsReducer";
-import {useAppDispatch, useAppSelector} from "./utils/hooks";
-import {isFetchingSelector} from "./features";
+import {AppRouter, Navbar} from './components';
+import {asteroidsDataAPI} from './api/api';
+import {getAsteroidsData, isFetching} from './redux/asteroidsReducer';
+import {useAppDispatch, useAppSelector} from './utils/hooks';
+import {isFetchingSelector} from './features';
 
 function App() {
     const dispatch = useAppDispatch();
@@ -27,11 +27,11 @@ function App() {
     }, [fetching]);
 
     return (
-    <div className="App">
-      <Navbar />
-      <AppRouter />
-    </div>
-  );
+        <div className="App">
+            <Navbar/>
+            <AppRouter/>
+        </div>
+    );
 }
 
 export default App;
