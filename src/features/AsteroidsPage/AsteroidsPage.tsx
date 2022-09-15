@@ -9,9 +9,12 @@ import {asteroidsListSelector, filteredAsteroidsListSelector, isDangerousSelecto
 import {Button} from '../../components';
 import {addAsteroid} from '../../redux/cartAsteroidReducer';
 import {Line} from '../../components';
+import {useNavigate} from "react-router-dom";
+import {PATH} from "../../components/routes/AppRouter";
 
 export function AsteroidsPage() {
     const dispatch = useAppDispatch();
+    const navigate = useNavigate();
 
     const [lengthUnit, setLengthUnit] = useState<'kilometers' | 'lunar'>('kilometers');
 
@@ -41,8 +44,14 @@ export function AsteroidsPage() {
     };
 
     const kilometerUnitHandler = () => setLengthUnit('kilometers');
-
     const lunarUnitHandler = () => setLengthUnit('lunar');
+
+    const asteroidPageHandler = (asteroid: any, id: string) => {
+        navigate(
+            `${PATH.about}/${id}`,
+            {state: asteroid}
+            );
+    }
 
     return (
         <div className="container">
@@ -83,6 +92,8 @@ export function AsteroidsPage() {
                                     ? approachDataObject(a.close_approach_data).miss_distance.kilometers
                                     : approachDataObject(a.close_approach_data).miss_distance.lunar
                             }
+                            asteroid={a}
+                            asteroidPageHandler={asteroidPageHandler}
                         >
                             <Button
                                 name={'DESTROY'}

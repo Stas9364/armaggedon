@@ -47,6 +47,7 @@ export function AsteroidsCart() {
                     />
                 </div>
             </div>
+
         </div>
     );
 }

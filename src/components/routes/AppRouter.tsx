@@ -13,7 +13,7 @@ export function AppRouter() {
     <Routes>
       <Route path={PATH.main} element={<AsteroidsPage />} />
       <Route path={PATH.order} element={<AsteroidsCart />} />
-      <Route path={PATH.about} element={<About />} />
+      <Route path={`${PATH.about}/:id`} element={<About />} />
     </Routes>
   );
 }

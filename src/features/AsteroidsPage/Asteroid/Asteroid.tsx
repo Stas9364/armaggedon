@@ -13,6 +13,8 @@ type AsteroidPropsTypes = {
     approachDate: any
     children?: ReactNode
     distance: string
+    asteroidPageHandler?: (asteroid: any, id: string) => void
+    asteroid?: any
 }
 
 export const Asteroid: React.FC<AsteroidPropsTypes> = ({
@@ -24,12 +26,19 @@ export const Asteroid: React.FC<AsteroidPropsTypes> = ({
                                                            approachDate,
                                                            children,
                                                            distance,
+                                                           asteroidPageHandler,
+                                                           asteroid
                                                        }) => {
+    const asteroidHandler = () => {
+        if (asteroidPageHandler) {
+            asteroidPageHandler(asteroid, id)
+        }
+    };
 
     return (
         <div className={style.container}>
             <div className={style.asteroidContainer}>
-                <div className={style.date}>
+                <div className={style.name} onClick={asteroidHandler}>
                     {name_limited}
                 </div>
                 <div className={style.descriptionContainer}>
@@ -38,13 +47,13 @@ export const Asteroid: React.FC<AsteroidPropsTypes> = ({
                         <div>{approachDate}</div>
                         <div>
                             <img className={style.unitsImg}
-                                src={diameterPic} alt="diameter img"
+                                 src={diameterPic} alt="diameter img"
                             /> {diameter.toFixed(2)} км
                         </div>
                         <div>{hazardous ? 'Опасно' : 'Безопасно'}</div>
                         <div>
                             <img className={style.unitsImg}
-                                 src={distancePic}  alt="distance img"
+                                 src={distancePic} alt="distance img"
                             /> {Math.round(Number(distance))}
                         </div>
                     </div>
