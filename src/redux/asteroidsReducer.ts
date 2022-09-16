@@ -9,13 +9,16 @@ enum ASTEROIDS {
     CANCEL_DESTRUCTION = 'CANCEL_DESTRUCTION'
 }
 
+type IsFetchingType = 'loading' | 'waiting' | 'uploading'
+type InitStateType = typeof initState;
+
 export const initState = {
-    asteroids: [],
+    asteroids: [] as any,
     isDangerous: false,
-    isFetching: true
+    isFetching: 'loading' as IsFetchingType
 };
 
-export const asteroidsReducer = (state: any = initState, action: AsteroidsActionsType): any => {
+export const asteroidsReducer = (state: InitStateType = initState, action: AsteroidsActionsType): InitStateType => {
     switch (action.type) {
         case ASTEROIDS.GET_DATA:
             return {...state, asteroids: [...state.asteroids,  ...action.data]};
@@ -47,7 +50,7 @@ export type AsteroidsActionsType =
 
 export const getAsteroidsData = (data: any) => ({type: ASTEROIDS.GET_DATA, data} as const);
 export const isDangerousAsteroids = (dangerous: boolean) => ({type: ASTEROIDS.IS_DANGEROUS, dangerous} as const);
-export const isFetching = (fetching: boolean) => ({type: ASTEROIDS.IS_FETCHING, fetching} as const);
+export const isFetching = (fetching: IsFetchingType) => ({type: ASTEROIDS.IS_FETCHING, fetching} as const);
 export const destroyAsteroid = (id: string) => ({type: ASTEROIDS.DESTROY_ASTEROID, id} as const);
 export const cancelDestruction = (asteroid: any) => ({type: ASTEROIDS.CANCEL_DESTRUCTION, asteroid} as const);
 

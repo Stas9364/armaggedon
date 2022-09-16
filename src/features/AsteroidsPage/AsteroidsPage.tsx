@@ -5,8 +5,13 @@ import {Asteroid} from './Asteroid/Asteroid';
 import {destroyAsteroid, isDangerousAsteroids, isFetching} from '../../redux/asteroidsReducer';
 import {useAppDispatch, useAppSelector} from '../../utils/hooks';
 import {approachDataObject} from '../../utils/approachDataObject';
-import {asteroidsListSelector, filteredAsteroidsListSelector, isDangerousSelector} from './selectors';
-import {Button} from '../../components';
+import {
+    asteroidsListSelector,
+    filteredAsteroidsListSelector,
+    isDangerousSelector,
+    isFetchingSelector
+} from './selectors';
+import {Button, Loader, Uploader} from '../../components';
 import {addAsteroid} from '../../redux/cartAsteroidReducer';
 import {Line} from '../../components';
 import {useNavigate} from 'react-router-dom';
@@ -19,6 +24,7 @@ export function AsteroidsPage() {
     const [lengthUnit, setLengthUnit] = useState<'kilometers' | 'lunar'>('kilometers');
 
     const isDangerous = useAppSelector(isDangerousSelector);
+    const fetching = useAppSelector(isFetchingSelector);
     const asteroidsList = useAppSelector(isDangerous ? filteredAsteroidsListSelector : asteroidsListSelector);
 
     useEffect(() => {
@@ -31,7 +37,7 @@ export function AsteroidsPage() {
 
     const scrollHandler = (e: any) => {
         if (e.target.documentElement.scrollHeight - ((e.target.documentElement.scrollTop) + window.innerHeight) < 100) {
-            dispatch(isFetching(true));
+            dispatch(isFetching('uploading')); //uploading
         }
     };
 
@@ -51,7 +57,7 @@ export function AsteroidsPage() {
         navigate(
             `${PATH.about}/${id}`,
             {state: asteroid}
-            );
+        );
     };
 
     return (
@@ -73,39 +79,43 @@ export function AsteroidsPage() {
                             style={lengthUnit === 'lunar' ? {fontWeight: 'bold'} : {}}
                         > лунных орбитах</span>
                     </span>
-                    <div >
+                    <div>
                         <span onClick={isDangerousHandler}>
-                            <input onChange={isDangerousHandler}  checked={isDangerous} type="checkbox"/>
+                            <input onChange={isDangerousHandler} checked={isDangerous} type="checkbox"/>
                             Показать только опасные
                         </span>
                     </div>
                 </div>
 
-                <div className={style.asteroidsContainer}>
-                    {asteroidsList.map((a: any) => {
-                        return <Asteroid
-                            key={a.id}
-                            id={a.id}
-                            hazardous={a.is_potentially_hazardous_asteroid}
-                            name_limited={a.name}
-                            diameter={a.estimated_diameter.kilometers.estimated_diameter_max}
-                            approachDate={approachDataObject(a.close_approach_data).close_approach_date_full}
-                            distance={
-                                lengthUnit === 'kilometers'
-                                    ? approachDataObject(a.close_approach_data).miss_distance.kilometers
-                                    : approachDataObject(a.close_approach_data).miss_distance.lunar
-                            }
-                            asteroid={a}
-                            asteroidPageHandler={asteroidPageHandler}
-                        >
-                            <Button
-                                name={'DESTROY'}
-                                onClick={() => addAsteroidToCart(a.id)}
-                                style={style.button}
-                            />
-                        </Asteroid>
-                    })}
-                </div>
+                {fetching === 'loading'
+                    ? <Loader/>
+                    : <div className={style.asteroidsContainer}>
+                        {asteroidsList.map((a: any) => {
+                            return <Asteroid
+                                key={a.id}
+                                id={a.id}
+                                hazardous={a.is_potentially_hazardous_asteroid}
+                                name_limited={a.name}
+                                diameter={a.estimated_diameter.kilometers.estimated_diameter_max}
+                                approachDate={approachDataObject(a.close_approach_data).close_approach_date_full}
+                                distance={
+                                    lengthUnit === 'kilometers'
+                                        ? approachDataObject(a.close_approach_data).miss_distance.kilometers
+                                        : approachDataObject(a.close_approach_data).miss_distance.lunar
+                                }
+                                asteroid={a}
+                                asteroidPageHandler={asteroidPageHandler}
+                            >
+                                <Button
+                                    name={'DESTROY'}
+                                    onClick={() => addAsteroidToCart(a.id)}
+                                    style={style.button}
+                                />
+                            </Asteroid>
+                        })}
+                    </div>
+                }
+                {fetching === 'uploading' && <Uploader/>}
             </div>
         </div>
     );

@@ -1,3 +1,9 @@
+.wrapper {
+    display: flex;
+    justify-content: center;
+    margin-top: 5%;
+}
+
 .loader {
     width: calc(100px - 24px);
     height: 50px;

@@ -2,7 +2,8 @@ import {AppRouter} from './routes/AppRouter';
 import {Navbar} from './Navbar/Navbar';
 import {Button} from './Button/Button';
 import {Line} from './DecorativeLine/DecorativeLine';
-import {Loader} from './Loader/Loader';
+import {Loader} from './Loaders/Loader';
+import {Uploader} from "./Loaders/Uploader";
 import {PATH} from './routes/AppRouter';
 
 export {
@@ -11,5 +12,6 @@ export {
     Button,
     Line,
     Loader,
+    Uploader,
     PATH
 };

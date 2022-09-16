@@ -9,19 +9,19 @@ import {isFetchingSelector} from './features';
 function App() {
     const dispatch = useAppDispatch();
 
-    const fetching = useAppSelector(isFetchingSelector);
+    const fetching = useAppSelector(isFetchingSelector); //loading
 
     const [currentPage, setCurrentPage] = useState(1);
 
     useEffect(() => {
-        if (fetching) {
+        if (fetching === 'loading' || fetching === 'uploading') {
             asteroidsDataAPI.getData(20, currentPage)
                 .then(response => {
                     dispatch(getAsteroidsData(response.data.near_earth_objects));
                     setCurrentPage(currentPage + 1);
                 })
                 .finally(() => {
-                    dispatch(isFetching(false));
+                    dispatch(isFetching('waiting')); //waiting
                 })
         }
     }, [fetching]);
