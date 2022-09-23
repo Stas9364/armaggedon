@@ -26,6 +26,7 @@ function App() {
         }
     }, [fetching]);
 
+
     return (
         <div className="App">
             <Navbar/>
