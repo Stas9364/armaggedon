@@ -7,6 +7,7 @@ type ButtonPropsType = {
     style?: any
 }
 
+
 export const Button: React.FC<ButtonPropsType> = ({onClick, name, children, style}) => {
     return (
         <div>
