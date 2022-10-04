@@ -1,19 +1,39 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "Armageddon",
+  "name": "Armageddon App ",
   "icons": [
     {
-      "src": "favicon.ico",
-      "sizes": "64x64 32x32 24x24 16x16",
-      "type": "image/x-icon"
-    },
-    {
-      "src": "logo192.png",
+      "src": "./icons/meteor16.png",
       "type": "image/png",
-      "sizes": "192x192"
+      "sizes": "16x16"
     },
     {
-      "src": "logo512.png",
+      "src": "./icons/meteor24.png",
+      "type": "image/png",
+      "sizes": "24x24"
+    },
+    {
+      "src": "./icons/meteor32.png",
+      "type": "image/png",
+      "sizes": "32x32"
+    },
+    {
+      "src": "./icons/meteor64.png",
+      "type": "image/png",
+      "sizes": "64x64"
+    },
+    {
+      "src": "./icons/meteor128.png",
+      "type": "image/png",
+      "sizes": "128x128"
+    },
+    {
+      "src": "./icons/meteor256.png",
+      "type": "image/png",
+      "sizes": "256x256"
+    },
+    {
+      "src": "./icons/meteor512.png",
       "type": "image/png",
       "sizes": "512x512"
     }

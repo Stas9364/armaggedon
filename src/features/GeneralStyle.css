@@ -3,3 +3,9 @@
     width: 60%;
     margin: 20px auto;
 }
+
+@media (max-width: 500px) {
+    .container {
+        width: 75%;
+    }
+}

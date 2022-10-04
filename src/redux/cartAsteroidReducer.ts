@@ -1,5 +1,3 @@
-import {AppThunk} from './reduxStore';
-
 enum CART {
     ADD_ASTEROID = 'ADD_ASTEROID',
     DELETE_ASTEROID = 'DELETE_ASTEROID'
@@ -27,7 +25,3 @@ export type cartAsteroidReducerType =
 
 export const addAsteroid = (asteroid: any) => ({type: CART.ADD_ASTEROID, asteroid} as const);
 export const deleteAsteroid = (id: string) => ({type: CART.DELETE_ASTEROID, id} as const);
-
-export const addAsteroidTC = (asteroid: any): AppThunk => (dispatch) => {
-
-}

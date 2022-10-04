@@ -1,17 +1,20 @@
 .wrapper {
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
+    flex-direction: column;
     flex-wrap: wrap;
+    margin-left: 25px;
 }
 
 .asteroid {
-    margin: 2%;
+    /*margin: 2%;*/
 }
 
 .img {
     width: 400px;
     margin-bottom: 15px;
 }
+
 
 .name {
     font-weight: bold;
@@ -30,9 +33,10 @@
 }
 
 .half {
-    float: left;
+    width: 400px;
+    /*float: left;*/
     /*width: 50%;*/
-    padding: 0 1em;
+    /*padding: 0 1em;*/
 }
 
 /* Accordion styles */
@@ -107,4 +111,32 @@
 
 .tab input[type=radio]:checked + label::after {
     transform: rotateX(180deg);
+}
+
+
+@media (max-width: 760px) {
+    .img{
+        width: 300px;
+    }
+    .half {
+        font-size: 14px;
+        width: 330px;
+    }
+}
+
+@media (max-width: 630px) {
+    .img{
+        width: 200px;
+    }
+    .half {
+        font-size: 12px;
+        width: 250px;
+    }
+}
+
+@media (max-width: 430px) {
+    .half {
+        font-size: 12px;
+        width: 200px;
+    }
 }

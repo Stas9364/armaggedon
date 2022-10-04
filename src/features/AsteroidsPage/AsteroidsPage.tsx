@@ -11,11 +11,9 @@ import {
     isDangerousSelector,
     isFetchingSelector
 } from './selectors';
-import {Button, Loader, Uploader} from '../../components';
+import {Button, Loader, Uploader, PATH, Line} from '../../components';
 import {addAsteroid} from '../../redux/cartAsteroidReducer';
-import {Line} from '../../components';
 import {useNavigate} from 'react-router-dom';
-import {PATH} from '../../components';
 
 export function AsteroidsPage() {
     const dispatch = useAppDispatch();

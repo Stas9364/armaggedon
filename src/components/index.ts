@@ -5,6 +5,7 @@ import {Line} from './DecorativeLine/DecorativeLine';
 import {Loader} from './Loaders/Loader';
 import {Uploader} from "./Loaders/Uploader";
 import {PATH} from './routes/AppRouter';
+import {DialogModal} from './DialogModal/DialogModal';
 
 export {
     AppRouter,
@@ -13,5 +14,6 @@ export {
     Line,
     Loader,
     Uploader,
-    PATH
+    PATH,
+    DialogModal
 };

@@ -1,8 +1,6 @@
 import React, {ReactNode} from 'react';
 import style from './Asteroid.module.css';
-import {Dangerous, nonDangerous} from '../../../assets';
-import {diameterPic} from '../../../assets';
-import {distancePic} from "../../../assets";
+import {Dangerous, nonDangerous, diameterPic, distancePic} from '../../../assets';
 
 type AsteroidPropsTypes = {
     id: string
